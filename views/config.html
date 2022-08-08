@@ -1,0 +1,41 @@
+<div class="relative flex justify-center items-center">
+
+    <div id="menu" class="w-full h-full bg-gray-900 bg-opacity-80 top-0 fixed sticky-0">
+        <div class="2xl:container 2xl:mx-auto py-10 px-4 md:px-28 flex justify-center items-center">
+            <div
+                class="w-96 md:w-auto dark:bg-gray-800 relative flex flex-col justify-center items-center bg-white py-16 px-4 md:px-24 xl:py-24 xl:px-36">
+                <div role="banner">
+                    <img title="VLC APP ICON" class="rounded-full border border-gray-100 shadow-sm"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOm2vVn5U0Vm78mBTsX2d6IJpcCs4rKyoPXxAApweCDW8RsZGgE9TKCcD0S_pcY3Ufb-A&usqp=CAU">
+                </div>
+                <div class="mt-12 mb-5">
+                    <h1 role="main"
+                        class="text-3xl dark:text-white lg:text-4xl font-semibold leading-7 lg:leading-9 text-center text-gray-800">
+                        VLC APP</h1>
+                </div>
+
+                <form action="/config" method="post">
+                    <div class="mb-5">
+                        <label for="email" class="mb-3 block text-base font-medium text-white">
+                            IP Address
+                        </label>
+                        <input type="text" name="email" id="email" placeholder="192.168.1.108:8080"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    </div>
+                    <div class="mb-5">
+                        <label for="password" class="mb-3 block text-base font-medium text-white">
+                            Password Server
+                        </label>
+                        <input type="password" name="password" id="password" placeholder="Enter your vlc password"
+                            class="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                    </div>
+                    <div>
+                        <button class="hover:shadow-form rounded-md bg-[#6A64F1] py-3 px-8 text-base font-semibold text-white outline-none">
+                            Finalizar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

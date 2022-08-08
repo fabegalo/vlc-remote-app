@@ -1,0 +1,129 @@
+<%- include('header.html.ejs'); -%>
+  <div class="bg-gray-900">
+    <div x-data="catalogo()" class="container mx-auto items-center justify-center text-white">
+
+      <div>
+        <h1 class="font-bold">CATALOGO:</h1>
+      </div>
+
+      <div id="youtube" class="grid grid-cols-12 gap-2 gap-y-4">
+      </div>
+
+      <div id="catalogo" class="container mx-auto">
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    const getPost = async (url) => {
+
+      const response = await fetch(url);
+
+      const data = await response.json();
+      // console.log({
+      //     data
+      // });
+      return data;
+    };
+
+    const getData = async () => {
+      const data = await getPost("/catalogs");
+      console.log(data);
+      printDir(data, document.getElementById('catalogo'));
+    }
+
+    function appendHtml(el, str) {
+      var div = document.createElement('div'); //container to append to
+      div.innerHTML = str;
+      while (div.children.length > 0) {
+        el.appendChild(div.children[0]);
+      }
+    }
+
+    function seconds2time(seconds) {
+      var hours = Math.floor(seconds / 3600);
+      var minutes = Math.floor((seconds - (hours * 3600)) / 60);
+      var seconds = seconds - (hours * 3600) - (minutes * 60);
+      var time = "";
+
+      if (hours != 0) {
+        time = hours + ":";
+      }
+      if (minutes != 0 || time !== "") {
+        minutes = (minutes < 10 && time !== "") ? "0" + minutes : String(minutes);
+        time += minutes + ":";
+      }
+      if (time === "") {
+        time = seconds + "s";
+      }
+      else {
+        time += (seconds < 10) ? "0" + seconds : String(seconds);
+      }
+      return time;
+    }
+
+    function printDir(data, listElement) {
+      if (!data) return null
+      var list = document.createElement('ul')
+      list.classList.add("directory-list");
+
+      data.forEach((i) => {
+        var item = document.createElement('li')
+
+        if (i.ATTR.duration == -1 || i.ATTR.duration == undefined) {
+          item.classList.add("folder");
+        }
+
+        if (i.ATTR.duration > -1) {
+          console.log(i);
+          var element = document.getElementById("youtube");
+          appendHtml(element, `
+          <!-- Video 1 -->
+          <div @click="playFilme('${i.ATTR.id}')" class="col-span-12 sm:col-span-6 md:col-span-3">
+            <card class="w-full flex flex-col">
+              <div class="relative">
+
+                <!-- Image Video -->
+                <a href="#">
+                  <img src="https://cdn.pixabay.com/photo/2013/07/13/11/45/play-158609_1280.png" class="w-96 h-auto" />
+                </a>
+
+                <p class="absolute right-2 bottom-2 bg-gray-900 text-gray-100 text-xs px-1 py">${seconds2time(i.ATTR.duration)}</p>
+              </div>
+
+              <div class="flex flex-row mt-2 gap-2">
+
+                <!-- Profile Picture -->
+                <a href="#">
+                  <img src="https://picsum.photos/seed/1/40/40" class="rounded-full max-h-10 max-w-10" />
+                </a>
+
+                <!-- Description -->
+                <div clas="flex flex-col">
+                  <a href="#">
+                    <p class="text-gray-100 text-sm font-semibold">${i.ATTR.name}</p>
+                  </a>
+                  <a class="text-gray-400 text-xs mt-2 hover:text-gray-100" href="#"> Web Dev Simplified </a>
+                  <p class="text-gray-400 text-xs mt-1">241K views . 3 years ago</p>
+                </div>
+
+              </div>
+            </card>
+          </div>
+          `);
+        }
+
+        item.appendChild(document.createTextNode(i.ATTR.name));
+        list.appendChild(item)
+        if (i.item && i.item.length > 0) {
+          printDir(i.item, list)
+        }
+      })
+      listElement.appendChild(list)
+    }
+
+    getData();
+  </script>
+
+  <%- include('footer.html.ejs'); -%>
